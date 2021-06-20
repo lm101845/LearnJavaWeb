@@ -1,9 +1,9 @@
 # 今日内容
 
 	1. 多表查询
-
+	
 	2. 事务
-
+	
 	3. DCL
 
 
@@ -44,7 +44,7 @@
 			1. 隐式内连接：使用where条件消除无用数据
 				* 例子：
 				-- 查询所有员工信息和对应的部门信息
-
+	
 				SELECT * FROM emp,dept WHERE emp.`dept_id` = dept.`id`;
 				
 				-- 查询员工表的名称，性别。部门表的名称
@@ -60,13 +60,14 @@
 				WHERE 
 					t1.`dept_id` = t2.`id`;
 
-	
+
+​	
 			2. 显式内连接：
 				* 语法： select 字段列表 from 表名1 [inner] join 表名2 on 条件
 				* 例如：
 					* SELECT * FROM emp INNER JOIN dept ON emp.`dept_id` = dept.`id`;	
 					* SELECT * FROM emp JOIN dept ON emp.`dept_id` = dept.`id`;	
-
+	
 			3. 内连接查询：
 				1. 从哪些表中查询数据
 				2. 条件是什么
@@ -94,7 +95,7 @@
 				
 				-- 一条sql就完成这个操作。子查询
 				SELECT * FROM emp WHERE emp.`salary` = (SELECT MAX(salary) FROM emp);
-
+	
 			* 子查询不同情况
 				1. 子查询的结果是单行单列的：
 					* 子查询可以作为条件，使用运算符去判断。 运算符： > >= < <= =
@@ -108,7 +109,7 @@
 					SELECT * FROM emp WHERE dept_id = 3 OR dept_id = 2;
 					-- 子查询
 					SELECT * FROM emp WHERE dept_id IN (SELECT id FROM dept WHERE NAME = '财务部' OR NAME = '市场部');
-
+	
 				3. 子查询的结果是多行多列的：
 					* 子查询可以作为一张虚拟表参与查询
 					-- 查询员工入职日期是2011-11-11日之后的员工信息和部门信息
@@ -118,9 +119,9 @@
 					
 					-- 普通内连接
 					SELECT * FROM emp t1,dept t2 WHERE t1.`dept_id` = t2.`id` AND t1.`join_date` >  '2011-11-11'
-
+	
 		* 多表查询练习
-
+	
 				-- 部门表
 				CREATE TABLE dept (
 				  id INT PRIMARY KEY PRIMARY KEY, -- 部门id
@@ -134,9 +135,10 @@
 				(20,'学工部','上海'),
 				(30,'销售部','广州'),
 				(40,'财务部','深圳');
-				
-				
-				
+
+
+​				
+​				
 				-- 职务表，职务名称，职务描述
 				CREATE TABLE job (
 				  id INT PRIMARY KEY,
@@ -150,9 +152,10 @@
 				(2, '经理', '管理部门员工'),
 				(3, '销售员', '向客人推销产品'),
 				(4, '文员', '使用办公软件');
-				
-				
-				
+
+
+​				
+​				
 				-- 员工表
 				CREATE TABLE emp (
 				  id INT PRIMARY KEY, -- 员工id
@@ -183,9 +186,10 @@
 				(1012,'李逵',4,1006,'2001-12-03','9500.00',NULL,30),
 				(1013,'小白龙',4,1004,'2001-12-03','30000.00',NULL,20),
 				(1014,'关羽',4,1007,'2002-01-23','13000.00',NULL,10);
-				
-				
-				
+
+
+​				
+​				
 				-- 工资等级表
 				CREATE TABLE salarygrade (
 				  grade INT PRIMARY KEY,   -- 级别
@@ -220,9 +224,10 @@
 					emp t1, job t2
 				WHERE 
 					t1.`job_id` = t2.`id`;
-				
-				
-				
+
+
+​				
+​				
 				-- 2.查询员工编号，员工姓名，工资，职务名称，职务描述，部门名称，部门位置
 				/*
 					分析：
@@ -256,9 +261,10 @@
 					t2.*
 				FROM emp t1, salarygrade t2
 				WHERE t1.`salary` BETWEEN t2.`losalary` AND t2.`hisalary`;
-				
-				
-				
+
+
+​				
+​				
 				-- 4.查询员工姓名，工资，职务名称，职务描述，部门名称，部门位置，工资等级
 				/*
 					分析：
@@ -280,9 +286,10 @@
 					t1.`job_id` = t2.`id` 
 					AND t1.`dept_id` = t3.`id`
 					AND t1.`salary` BETWEEN t4.`losalary` AND t4.`hisalary`;
-				
-				
-				
+
+
+​				
+​				
 				-- 5.查询出部门编号、部门名称、部门位置、部门人数
 				
 				/*
@@ -302,8 +309,9 @@
 						emp
 					GROUP BY dept_id) t2
 				WHERE t1.`id` = t2.dept_id;
-				
-				
+
+
+​				
 				-- 6.查询所有员工的姓名及其直接上级的姓名,没有领导的员工也需要查询
 				
 				/*
@@ -354,8 +362,9 @@
 			);
 			-- 添加数据
 			INSERT INTO account (NAME, balance) VALUES ('zhangsan', 1000), ('lisi', 1000);
-			
-			
+
+
+​			
 			SELECT * FROM account;
 			UPDATE account SET balance = 1000;
 			-- 张三给李四转账 500 元
@@ -407,14 +416,14 @@
 			3. repeatable read：可重复读 （MySQL默认）
 				* 产生的问题：幻读
 			4. serializable：串行化
-				* 可以解决所有的问题
-
+				* 可以解决所有的问题 
+	
 			* 注意：隔离级别从小到大安全性越来越高，但是效率越来越低
 			* 数据库查询隔离级别：
 				* select @@tx_isolation;
 			* 数据库设置隔离级别：
 				* set global transaction isolation level  级别字符串;
-
+	
 		* 演示：
 			set global transaction isolation level read uncommitted;
 			start transaction;
@@ -430,9 +439,9 @@
 		2. DML：增删改表中数据
 		3. DQL：查询表中数据
 		4. DCL：管理用户，授权
-
+	
 	* DBA：数据库管理员
-
+	
 	* DCL：管理用户，授权
 		1. 管理用户
 			1. 添加用户：
@@ -446,15 +455,15 @@
 				
 				SET PASSWORD FOR '用户名'@'主机名' = PASSWORD('新密码');
 				SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');
-
+	
 				* mysql中忘记了root用户的密码？
 					1. cmd -- > net stop mysql 停止mysql服务
 						* 需要管理员运行该cmd
-
+	
 					2. 使用无验证方式启动mysql服务： mysqld --skip-grant-tables
 					3. 打开新的cmd窗口,直接输入mysql命令，敲回车。就可以登录成功
 					4. use mysql;
-					5. update user set password = password('你的新密码') where user = 'root';
+					5. update user set password = password('123456') where user = 'root';
 					6. 关闭两个窗口
 					7. 打开任务管理器，手动结束mysqld.exe 的进程
 					8. 启动mysql服务
@@ -466,13 +475,13 @@
 				SELECT * FROM USER;
 				
 				* 通配符： % 表示可以在任意主机使用用户登录数据库
-
+	
 		2. 权限管理：
 			1. 查询权限：
 				-- 查询权限
 				SHOW GRANTS FOR '用户名'@'主机名';
 				SHOW GRANTS FOR 'lisi'@'%';
-
+	
 			2. 授予权限：
 				-- 授予权限
 				grant 权限列表 on 数据库名.表名 to '用户名'@'主机名';
