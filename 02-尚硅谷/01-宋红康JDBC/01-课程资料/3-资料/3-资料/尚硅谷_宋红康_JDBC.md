@@ -1,11 +1,5 @@
 # JDBC核心技术
 
-讲师：宋红康
-
-微博：尚硅谷-宋红康
-
-***
-
 ## 第1章：JDBC概述
 
 ### 1.1 数据的持久化
@@ -14,7 +8,7 @@
 
 - 持久化的主要应用是将内存中的数据存储在关系型数据库中，当然也可以存储在磁盘文件、XML数据文件中。
 
-  ![1566741430592](尚硅谷_宋红康_JDBC.assets/1566741430592.png) 
+  ![](尚硅谷_宋红康_JDBC/01.png)
 
 ### 1.2 Java中的数据存储技术
 
@@ -29,24 +23,29 @@
 ### 1.3 JDBC介绍
 
 - JDBC(Java Database Connectivity)是一个**独立于特定数据库管理系统、通用的SQL数据库存取和操作的公共接口**（一组API），定义了用来访问数据库的标准Java类库，（**java.sql,javax.sql**）使用这些类库可以以一种**标准**的方法、方便地访问数据库资源。
+
 - JDBC为访问不同的数据库提供了一种**统一的途径**，为开发者屏蔽了一些细节问题。
+
 - JDBC的目标是使Java程序员使用JDBC可以连接任何**提供了JDBC驱动程序**的数据库系统，这样就使得程序员无需对特定的数据库系统的特点有过多的了解，从而大大简化和加快了开发过程。
+
 - 如果没有JDBC，那么Java程序访问数据库时是这样的：
 
-![1555575760234](尚硅谷_宋红康_JDBC.assets/1555575760234.png)
+  ![](尚硅谷_宋红康_JDBC/02.png)
+
+
 
 ***
 
 - 有了JDBC，Java程序访问数据库时是这样的：
 
 
-![1555575981203](尚硅谷_宋红康_JDBC.assets/1555575981203.png)
+![](尚硅谷_宋红康_JDBC/03.png)
 
 ***
 
 - 总结如下：
 
-![1566741692804](尚硅谷_宋红康_JDBC.assets/1566741692804.png)
+![](尚硅谷_宋红康_JDBC/04.png)
 
 ### 1.4 JDBC体系结构
 
@@ -60,9 +59,11 @@
 
 ### 1.5 JDBC程序编写步骤
 
-![1565969323908](尚硅谷_宋红康_JDBC.assets/1565969323908.png)
+![](尚硅谷_宋红康_JDBC/05.png)
 
 > 补充：ODBC(**Open Database Connectivity**，开放式数据库连接)，是微软在Windows平台下推出的。使用者在程序中只需要调用ODBC API，由 ODBC 驱动程序将调用转换成为对特定的数据库的调用请求。
+>
+> 我们的增删改操作要比查询操作简单一些，因为查询操作有结果集(ResultSet)，而增删改操作没有。
 
 ## 第2章：获取数据库连接
 
@@ -76,21 +77,19 @@
   - Oracle的驱动：**oracle.jdbc.driver.OracleDriver**
   - mySql的驱动： **com.mysql.jdbc.Driver**
 
-![1555576157618](尚硅谷_宋红康_JDBC.assets/1555576157618.png)
-
-![1555576170074](尚硅谷_宋红康_JDBC.assets/1555576170074.png)
+![](尚硅谷_宋红康_JDBC/06.png)
 
 - 将上述jar包拷贝到Java工程的一个目录中，习惯上新建一个lib文件夹。
 
- ![1566134718955](尚硅谷_宋红康_JDBC.assets/1566134718955.png)
+![](尚硅谷_宋红康_JDBC/07.png)
 
 在驱动jar上右键-->Build Path-->Add to Build Path
 
- ![1566134781682](尚硅谷_宋红康_JDBC.assets/1566134781682.png)
+![](尚硅谷_宋红康_JDBC/08.png)
 
 注意：如果是Dynamic Web Project（动态的web项目）话，则是把驱动jar放到WebContent（有的开发工具叫WebRoot）目录中的WEB-INF目录中的lib目录下即可
 
- ![1566135290460](尚硅谷_宋红康_JDBC.assets/1566135290460.png)
+![](尚硅谷_宋红康_JDBC/09.png)
 
 #### 2.1.2 加载与注册JDBC驱动
 
@@ -103,7 +102,19 @@
 
   - 通常不用显式调用 DriverManager 类的 registerDriver() 方法来注册驱动程序类的实例，因为 Driver 接口的驱动程序类**都**包含了静态代码块，在这个静态代码块中，会调用 DriverManager.registerDriver() 方法来注册自身的一个实例。下图是MySQL的Driver实现类的源码：
 
-    ![1566136831283](尚硅谷_宋红康_JDBC.assets/1566136831283.png)
+    ~~~java
+    	//
+    	// Register ourselves with the DriverManager
+    	//
+    	static {
+    		try {
+    			java.sql.DriverManager.registerDriver(new Driver());
+    		} catch (SQLException E) {
+    			throw new RuntimeException("Can't register driver!");
+    		}
+    	}
+    ~~~
+
 
 ### 2.2 要素二：URL
 
@@ -117,7 +128,7 @@
 
 - 举例：
 
-  ![1555576477107](尚硅谷_宋红康_JDBC.assets/1555576477107.png)
+  ![](尚硅谷_宋红康_JDBC/10.png)
 
 - **几种常用数据库的 JDBC URL**
 
@@ -1152,7 +1163,6 @@ public void update(Connection conn ,String sql, Object... args) {
     
     ```
 
-    
 
 ## 第7章：DAO及相关实现类
 
@@ -1982,8 +1992,6 @@ public void testDelete() throws Exception {
   - **MapHandler：**将结果集中的第一行数据封装到一个Map里，key是列名，value就是对应的值。
   - **MapListHandler：**将结果集中的每一行数据都封装到一个Map里，然后再存放到List
   - **ScalarHandler：**查询单个值对象
-
-    
 
 - 测试
 
