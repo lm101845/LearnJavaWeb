@@ -17,5 +17,8 @@ public class CalculatorTest {
 
         int result2 = c.sub(5,2);
         System.out.println(result2);
+
+        String str = "abc";
+
     }
 }
