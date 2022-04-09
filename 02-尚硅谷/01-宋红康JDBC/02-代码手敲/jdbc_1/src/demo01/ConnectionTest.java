@@ -12,28 +12,28 @@ import java.util.Properties;
  * @Date 2022/4/5 12:08
  **/
 public class ConnectionTest {
-    //Á¬½Ó·½Ê½Ò»
+    //è¿æ¥æ–¹å¼ä¸€
     @Test
     public void testConnection1() throws SQLException {
         //Driver driver = new com.mysql.jdbc.Driver();
-        //Õâ¸öÔÚMySQL8ÀïÃæ±»·ÏÆúÁË
-        //Ò»¸ö¿ÓµÄµØ·½£¬ÒòÎªÎÒ×°µÄMySQLÊÇ8.0µÄ£¬ÀÏÊ¦¸øµÄjar°üÊÇ5.xµÄ£¬²»Æ¥Åä£¬ËùÒÔÁ¬½Ó²»ÉÏ£¬»»¸ö¸ß°æ±¾jar°ü¾ÍºÃÁË
+        //è¿™ä¸ªåœ¨MySQL8é‡Œé¢è¢«åºŸå¼ƒäº†
+        //ä¸€ä¸ªå‘çš„åœ°æ–¹ï¼Œå› ä¸ºæˆ‘è£…çš„MySQLæ˜¯8.0çš„ï¼Œè€å¸ˆç»™çš„jaråŒ…æ˜¯5.xçš„ï¼Œä¸åŒ¹é…ï¼Œæ‰€ä»¥è¿æ¥ä¸ä¸Šï¼Œæ¢ä¸ªé«˜ç‰ˆæœ¬jaråŒ…å°±å¥½äº†
         Driver driver = new com.mysql.cj.jdbc.Driver();
-        //com.mysql.jdbc.DriverÕâ¸öÊÇĞ´ËÀµÄ
-        //driverÊÇÇı¶¯µÄÒâË¼
+        //com.mysql.jdbc.Driverè¿™ä¸ªæ˜¯å†™æ­»çš„
+        //driveræ˜¯é©±åŠ¨çš„æ„æ€
         //url:http://localhost:8080/gmall/keyboard.jpg
         String url = "jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8";
-        //±¨´í½â¾öÁ´½Ó£ºhttps://blog.csdn.net/qq_42815754/article/details/83652253
-        //jdbc://mysql Ğ­Òé
-        //localhost£ºipµØÖ·
-        //3306 Ä¬ÈÏmysqlµÄ¶Ë¿ÚºÅ
-        //test: testÊı¾İ¿âÃû
+        //æŠ¥é”™è§£å†³é“¾æ¥ï¼šhttps://blog.csdn.net/qq_42815754/article/details/83652253
+        //jdbc://mysql åè®®
+        //localhostï¼šipåœ°å€
+        //3306 é»˜è®¤mysqlçš„ç«¯å£å·
+        //test: testæ•°æ®åº“å
         Properties info = new Properties();
-        //½«ÓÃ»§ÃûºÍÃÜÂë·â×°ÔÚPropertiesÖĞ
+        //å°†ç”¨æˆ·åå’Œå¯†ç å°è£…åœ¨Propertiesä¸­
         info.setProperty("user","root");
         info.setProperty("password","123456");
         Connection conn = driver.connect(url, info);
         System.out.println(conn);
-        //ÕâÀï¾ÍÏàµ±ÓÚÄãÄÃµ½Å®ÉúµÄÎ¢ĞÅºÅÁË£¬¾ÍÁªÏµÉÏÁË(ĞèÒªurl,info½øĞĞ¸³Öµ²ÅĞĞ)
+        //è¿™é‡Œå°±ç›¸å½“äºä½ æ‹¿åˆ°å¥³ç”Ÿçš„å¾®ä¿¡å·äº†ï¼Œå°±è”ç³»ä¸Šäº†(éœ€è¦url,infoè¿›è¡Œèµ‹å€¼æ‰è¡Œ)
     }
 }

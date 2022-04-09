@@ -1,5 +1,7 @@
 # JDBC核心技术
 
+> https://blog.csdn.net/slyzlh/article/details/114743156
+
 ## 第1章：JDBC概述
 
 ### 1.1 数据的持久化
@@ -339,11 +341,11 @@ driverClass=com.mysql.jdbc.Driver
 - 数据库连接被用于向数据库服务器发送命令和 SQL 语句，并接受数据库服务器返回的结果。其实一个数据库连接就是一个Socket连接。
 
 - 在 java.sql 包中有 3 个接口分别定义了对数据库的调用的不同方式：
-  - Statement：用于执行静态 SQL 语句并返回它所生成结果的对象。 
-  - PrepatedStatement：SQL 语句被预编译并存储在此对象中，可以使用此对象多次高效地执行该语句。
-  - CallableStatement：用于执行 SQL 存储过程
+  - Statement：用于执行静态 SQL 语句并返回它所生成结果的对象。 ——我们后面不用这个
+  - PrepatedStatement：SQL 语句被预编译并存储在此对象中，可以使用此对象多次高效地执行该语句。——**我们用这个**
+  - CallableStatement：用于执行 SQL 存储过程——JDBC不讲，到了框架再讲这个
 
-  ![1566573842140](尚硅谷_宋红康_JDBC.assets/1566573842140.png)
+  ![](尚硅谷_宋红康_JDBC/11.png)
 
 ### 3.2 使用Statement操作数据表的弊端
 
@@ -361,7 +363,7 @@ driverClass=com.mysql.jdbc.Driver
   - **问题一：存在拼串操作，繁琐**
   - **问题二：存在SQL注入问题**
 
-- SQL 注入是利用某些系统没有对用户输入的数据进行充分的检查，而在用户输入数据中注入非法的 SQL 语句段或命令(如：SELECT user, password FROM user_table WHERE user='a' OR 1 = ' AND password = ' OR '1' = '1') ，从而利用系统的 SQL 引擎完成恶意行为的做法。
+- SQL 注入是利用某些系统没有对用户输入的数据进行充分的检查，而在用户输入数据中注入非法的 SQL 语句段或命令(如：`SELECT user, password FROM user_table WHERE user='a' OR 1 = ' AND password = ' OR '1' = '1'`) ，从而利用系统的 SQL 引擎完成恶意行为的做法。
 
 - 对于 Java 而言，要防范 SQL 注入，只要用 PreparedStatement(从Statement扩展而来) 取代 Statement 就可以了。
 
@@ -482,7 +484,7 @@ public class StatementTest {
 
 综上：
 
-![1566569819744](尚硅谷_宋红康_JDBC.assets/1566569819744.png)
+![](尚硅谷_宋红康_JDBC/12.png)
 
 ### 3.3 PreparedStatement的使用
 

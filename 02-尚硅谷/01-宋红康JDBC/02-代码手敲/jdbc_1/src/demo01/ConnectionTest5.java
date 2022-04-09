@@ -24,7 +24,9 @@ public class ConnectionTest5 {
     public void testConnection5() throws SQLException, ClassNotFoundException, IOException {
         //1.读取配置文件中的4个配置信息
         //通过类的加载器来加载
-        InputStream is = ConnectionTest5.class.getClassLoader().getResourceAsStream("jdbc.properties");
+//        InputStream is = ConnectionTest5.class.getClassLoader().getResourceAsStream("jdbc.properties");
+        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("jdbc.properties");
+        //这种方式也可以获得一个系统类加载器
 
         Properties props = new Properties();
         props.load(is);
