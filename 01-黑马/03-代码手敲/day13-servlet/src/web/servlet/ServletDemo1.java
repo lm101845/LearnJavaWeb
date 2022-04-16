@@ -1,13 +1,17 @@
-package servlet;
+package web.servlet;
+
+/**
+ * @Author liming
+ * @Date 2022/4/16 21:35
+ **/
 
 import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * @Author liming
- * @Date 2022/3/27 15:11
- **/
-public class ServeltDemo1 implements Servlet {
+ * servlet快速入门
+ * */
+public class ServletDemo1 implements Servlet {
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
 
@@ -18,10 +22,9 @@ public class ServeltDemo1 implements Servlet {
         return null;
     }
 
-    //提供服务的方法
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
-        System.out.println("hello Servlet");
+        System.out.println("hello servlet ");
     }
 
     @Override
