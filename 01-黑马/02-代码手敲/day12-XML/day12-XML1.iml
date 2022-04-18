@@ -7,7 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="thymeleaf_lib" level="project" />
-    <orderEntry type="module" module-name="apache-tomcat-8.5.31-src" />
+    <orderEntry type="library" name="jsoup-1.11.2" level="project" />
+    <orderEntry type="library" name="libs2" level="project" />
+    <orderEntry type="library" name="jsoup" level="project" />
   </component>
 </module>

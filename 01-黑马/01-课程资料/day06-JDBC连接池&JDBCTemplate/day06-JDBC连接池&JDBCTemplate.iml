@@ -3,13 +3,13 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/代码/day05_dataSource_jdbcTemplate/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="commons-beanutils-1.8.0" level="project" />
     <orderEntry type="library" name="01.jar" level="project" />
     <orderEntry type="library" name="lib4" level="project" />
+    <orderEntry type="library" name="C3P0连接池" level="project" />
     <orderEntry type="library" name="在项目中导入" level="project" />
     <orderEntry type="library" name="lib5" level="project" />
     <orderEntry type="library" name="libs1" level="project" />
@@ -19,7 +19,5 @@
     <orderEntry type="library" name="lib2" level="project" />
     <orderEntry type="library" name="druid-1.0.9" level="project" />
     <orderEntry type="library" name="lib6" level="project" />
-    <orderEntry type="module" module-name="BeanUtils" />
-    <orderEntry type="module" module-name="apache-tomcat-8.5.31-src" />
   </component>
 </module>

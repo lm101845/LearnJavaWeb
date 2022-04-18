@@ -1,3 +1,7 @@
 学习servlet的时候感觉有点崩溃，我的IDEA版本和老师的不一样，导致花了很长时间项目没有跑起来，出了一大堆问题，搞得心情很烦躁。
 
 现在又开始重新看，为了防止错误重新开始弄一个新文件夹创建。  22-04-16
+
+右键-新建一个module,选择java(不要选java ee),module创建完之后，右键——add frameworks suppot,选择web application即可。
+
+

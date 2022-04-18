@@ -7,6 +7,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="01.jar" level="project" />
+    <orderEntry type="library" name="在项目中导入" level="project" />
+    <orderEntry type="library" name="lib5" level="project" />
+    <orderEntry type="library" name="libs1" level="project" />
+    <orderEntry type="library" name="lib3" level="project" />
     <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="library" name="lib2" level="project" />
+    <orderEntry type="library" name="druid-1.0.9" level="project" />
+    <orderEntry type="module" module-name="day06-JDBC连接池&amp;JDBCTemplate1" />
   </component>
 </module>
