@@ -28,25 +28,6 @@ public class RequestDemo3 extends HttpServlet {
             System.out.println("这个是火狐浏览器访问的");
         }
         System.out.println("agent为：" + agent);
-
-        String referer = request.getHeader("referer");
-        System.out.println("referer为：" + referer);
-        //refererhttp://localhost:8080/day13/login.html
-
-        //可以通过referer实现防盗链操作
-        if(referer != null){
-            if(referer.contains("/day13")){
-                //正常访问
-                //System.out.println("正常访问，播放电影");
-                response.setContentType("text/html;charset=utf-8");
-                response.getWriter().write("正常播放电影......");
-            }else{
-                //盗链
-                //System.out.println("想看电影吗？来优酷吧...");
-                response.setContentType("text/html;charset=utf-8");
-                response.getWriter().write("你这个是盗链啊，想看电影的话去优酷吧......");
-            }
-        }
     }
 
     @Override
