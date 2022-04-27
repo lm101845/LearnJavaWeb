@@ -65,4 +65,30 @@ public class JDBCUtils {
             e.printStackTrace();
         }
     }
+    //关闭资源的操作：重载
+    public static void closeResource(Connection conn, Statement ps,ResultSet rs){
+        try {
+            if(ps != null){
+                ps.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

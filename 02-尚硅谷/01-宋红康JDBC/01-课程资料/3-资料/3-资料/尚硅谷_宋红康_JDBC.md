@@ -639,7 +639,7 @@ public class StatementTest {
   - getString()
   - …
 
-  ![1555580152530](尚硅谷_宋红康_JDBC.assets/1555580152530.png)
+  ![](尚硅谷_宋红康_JDBC/13.png)
 
 #### 3.4.2 ResultSetMetaData
 

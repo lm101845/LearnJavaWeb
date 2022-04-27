@@ -25,7 +25,7 @@ public class AnnoDemo02 {
     public void show1(){
         //有缺陷，但是你也不能删，否则不兼容低版本
     }
-    @MyAnno(show = "")
+    @MyAnno(age = 12)
     public void show2(){
         //替代show1方法
     }

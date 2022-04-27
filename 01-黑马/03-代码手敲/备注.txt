@@ -4,4 +4,6 @@
 
 右键-新建一个module,选择java(不要选java ee),module创建完之后，右键——add frameworks suppot,选择web application即可。
 
+IDEA需要我们手动为方法添加注释，使用Eclipse时我们生成注释的习惯是/**+Enter,
+
 
