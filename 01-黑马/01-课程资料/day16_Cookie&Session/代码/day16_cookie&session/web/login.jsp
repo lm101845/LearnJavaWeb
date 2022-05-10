@@ -10,8 +10,6 @@
                 this.src="/day16/checkCodeServlet?time="+new Date().getTime();
             }
         }
-
-
     </script>
     <style>
         div{
@@ -43,13 +41,8 @@
                 <td colspan="2"><input type="submit" value="登录"></td>
             </tr>
         </table>
-
-
     </form>
-
-
     <div><%=request.getAttribute("cc_error") == null ? "" : request.getAttribute("cc_error")%></div>
     <div><%=request.getAttribute("login_error") == null ? "" : request.getAttribute("login_error") %></div>
-
 </body>
 </html>
