@@ -25,5 +25,21 @@ ${requestScope.u}
     ${u.birthday.month}<br>
 
     ${u.birStr}<br>
+
+    <hr>
+    <h2>EL获取map值</h2>
+    ${map.gender}
+
+<%
+    List list = new ArrayList();
+    list.add("aaa");
+    list.add("bbb");
+    list.add("ccc");
+    request.setAttribute("list",list);
+
+    Map map = new HashMap();
+    map.put("sname","李四");
+    map.put("sgender","男");
+%>
 </body>
 </html>
