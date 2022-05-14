@@ -1,6 +1,8 @@
 # JDBC核心技术
 
 > https://blog.csdn.net/slyzlh/article/details/114743156
+>
+> 现在是2022年5月14日，缺的图片我都全部补充完毕了，现在这个笔记就是完整的了。
 
 ## 第1章：JDBC概述
 
@@ -656,7 +658,7 @@ public class StatementTest {
 
   -  isAutoIncrement(int column)：指示是否自动为指定列进行编号，这样这些列仍然是只读的。 
 
-![1555579494691](尚硅谷_宋红康_JDBC.assets/1555579494691.png)
+![](尚硅谷_宋红康_JDBC/14.png)
 
 **问题1：得到结果集后, 如何知道该结果集中有哪些列 ？ 列名是什么？**
 
@@ -668,15 +670,13 @@ public class StatementTest {
 2. **获取 ResultSet 中有多少列**：调用 ResultSetMetaData 的 getColumnCount() 方法
 3. **获取 ResultSet 每一列的列的别名是什么**：调用 ResultSetMetaData 的getColumnLabel() 方法
 
-![1555579816884](尚硅谷_宋红康_JDBC.assets/1555579816884.png)
+![](尚硅谷_宋红康_JDBC/15.png)
 
 ### 3.5 资源的释放
 
 - 释放ResultSet, Statement,Connection。
 - 数据库连接（Connection）是非常稀有的资源，用完后必须马上释放，如果Connection不能及时正确的关闭将导致系统宕机。Connection的使用原则是**尽量晚创建，尽量早的释放。**
 - 可以在finally中关闭，保证及时其他代码出现异常，资源也一定能被关闭。
-
-
 
 ### 3.6 JDBC API小结
 
@@ -696,25 +696,80 @@ public class StatementTest {
     - 获取列的别名：getColumnLabel()
   - 通过反射，创建指定类的对象，获取指定的属性并赋值
 
-
-
-***
-
 ## 章节练习
 
 **练习题1：从控制台向数据库的表customers中插入一条数据，表结构如下：**
 
-![1555580275036](尚硅谷_宋红康_JDBC.assets/1555580275036.png)
+![](尚硅谷_宋红康_JDBC/16.png)
 
+~~~java
+public class Exer1Test {
+	
+	@Test
+	public void testInsert(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("请输入用户名：");
+		String name = scanner.next();
+		System.out.print("请输入邮箱：");
+		String email = scanner.next();
+		System.out.print("请输入生日：");
+		String birthday = scanner.next();//'1992-09-08'
+		
+		String sql = "insert into customers(name,email,birth)values(?,?,?)";
+		int insertCount = update(sql,name,email,birthday);
+		if(insertCount > 0){
+			System.out.println("添加成功");
+			
+		}else{
+			System.out.println("添加失败");
+		}
+		
+	}
+	
+	
+	// 通用的增删改操作
+	public int update(String sql, Object... args) {// sql中占位符的个数与可变形参的长度相同！
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			// 1.获取数据库的连接
+			conn = JDBCUtils.getConnection();
+			// 2.预编译sql语句，返回PreparedStatement的实例
+			ps = conn.prepareStatement(sql);
+			// 3.填充占位符
+			for (int i = 0; i < args.length; i++) {
+				ps.setObject(i + 1, args[i]);// 小心参数声明错误！！
+			}
+			// 4.执行
+			/*
+			 * ps.execute():
+			 * 如果执行的是查询操作，有返回结果，则此方法返回true;
+			 * 如果执行的是增、删、改操作，没有返回结果，则此方法返回false.
+			 */
+			//方式一：
+//			return ps.execute();
+			//方式二：
+			return ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 5.资源的关闭
+			JDBCUtils.closeResource(conn, ps);
 
+		}
+		return 0;
+	}
+
+}
+~~~
 
 **练习题2：创立数据库表 examstudent，表结构如下：**
 
-![1555580735377](尚硅谷_宋红康_JDBC.assets/1555580735377.png)
+![](尚硅谷_宋红康_JDBC/17.png)
 
 向数据表中添加如下数据：
 
-![1555580763636](尚硅谷_宋红康_JDBC.assets/1555580763636.png)
+![](尚硅谷_宋红康_JDBC/18.png)
 
 **代码实现1：插入一个新的student 信息**
 
@@ -731,15 +786,278 @@ Grade:
 
 **代码实现2：在 eclipse中建立 java 程序：输入身份证号或准考证号可以查询到学生的基本信息。结果如下：**
 
-![1555580937490](尚硅谷_宋红康_JDBC.assets/1555580937490.png)
+![](尚硅谷_宋红康_JDBC/19.png)
 
 **代码实现3：完成学生信息的删除功能**
 
-![1555580965019](尚硅谷_宋红康_JDBC.assets/1555580965019.png)
+![](尚硅谷_宋红康_JDBC/20.png)
 
-***
+~~~java
+public class Exer2Test {
 
+	// 问题1：向examstudent表中添加一条记录
+	/*
+	 *  Type: 
+		IDCard:
+		ExamCard:
+		StudentName:
+		Location:
+		Grade:
+	 */
+	@Test
+	public void testInsert(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("四级/六级：");
+		int type = scanner.nextInt();
+		System.out.print("身份证号：");
+		String IDCard = scanner.next();
+		System.out.print("准考证号：");
+		String examCard = scanner.next();
+		System.out.print("学生姓名：");
+		String studentName = scanner.next();
+		System.out.print("所在城市：");
+		String location = scanner.next();
+		System.out.print("考试成绩：");
+		int grade = scanner.nextInt();
+		
+		String sql = "insert into examstudent(type,IDCard,examCard,studentName,location,grade)values(?,?,?,?,?,?)";
+		int insertCount = update(sql,type,IDCard,examCard,studentName,location,grade);
+		if(insertCount > 0){
+			System.out.println("添加成功");
+		}else{
+			System.out.println("添加失败");
+		}
+		
+		
+		
+	}
+	// 通用的增删改操作
+	public int update(String sql, Object... args) {// sql中占位符的个数与可变形参的长度相同！
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			// 1.获取数据库的连接
+			conn = JDBCUtils.getConnection();
+			// 2.预编译sql语句，返回PreparedStatement的实例
+			ps = conn.prepareStatement(sql);
+			// 3.填充占位符
+			for (int i = 0; i < args.length; i++) {
+				ps.setObject(i + 1, args[i]);// 小心参数声明错误！！
+			}
+			// 4.执行
+			/*
+			 * ps.execute(): 
+			 * 如果执行的是查询操作，有返回结果，则此方法返回true;
+			 * 如果执行的是增、删、改操作，没有返回结果，则此方法返回false.
+			 */
+			// 方式一：
+			// return ps.execute();
+			// 方式二：
+			return ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 5.资源的关闭
+			JDBCUtils.closeResource(conn, ps);
 
+		}
+		return 0;
+	}
+	
+	//问题2：根据身份证号或者准考证号查询学生成绩信息
+	@Test
+	public void queryWithIDCardOrExamCard(){
+		System.out.println("请选择您要输入的类型：");
+		System.out.println("a.准考证号");
+		System.out.println("b.身份证号");
+		Scanner scanner = new Scanner(System.in);
+		String selection = scanner.next();
+		if("a".equalsIgnoreCase(selection)){//if(selection.equalsIgnoreCase("a")){
+			System.out.println("请输入准考证号：");
+			String examCard = scanner.next();
+			String sql = "select FlowID flowID,Type type,IDCard,ExamCard examCard,StudentName name,Location location,Grade grade from examstudent where examCard = ?";
+			
+			Student student = getInstance(Student.class,sql,examCard);
+			if(student != null){
+				System.out.println(student);
+				
+			}else{
+				System.out.println("输入的准考证号有误！");
+			}
+			
+		}else if("b".equalsIgnoreCase(selection)){
+			System.out.println("请输入身份证号：");
+			String IDCard = scanner.next();
+			String sql = "select FlowID flowID,Type type,IDCard,ExamCard examCard,StudentName name,Location location,Grade grade from examstudent where IDCard = ?";
+			
+			Student student = getInstance(Student.class,sql,IDCard);
+			if(student != null){
+				System.out.println(student);
+				
+			}else{
+				System.out.println("输入的身份证号有误！");
+			}
+		}else{
+			System.out.println("您的输入有误，请重新进入程序。");
+		}
+		
+	}
+	
+	public <T> T getInstance(Class<T> clazz,String sql, Object... args) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = JDBCUtils.getConnection();
+
+			ps = conn.prepareStatement(sql);
+			for (int i = 0; i < args.length; i++) {
+				ps.setObject(i + 1, args[i]);
+			}
+
+			rs = ps.executeQuery();
+			// 获取结果集的元数据 :ResultSetMetaData
+			ResultSetMetaData rsmd = rs.getMetaData();
+			// 通过ResultSetMetaData获取结果集中的列数
+			int columnCount = rsmd.getColumnCount();
+
+			if (rs.next()) {
+				T t = clazz.newInstance();
+				// 处理结果集一行数据中的每一个列
+				for (int i = 0; i < columnCount; i++) {
+					// 获取列值
+					Object columValue = rs.getObject(i + 1);
+
+					// 获取每个列的列名
+					// String columnName = rsmd.getColumnName(i + 1);
+					String columnLabel = rsmd.getColumnLabel(i + 1);
+
+					// 给t对象指定的columnName属性，赋值为columValue：通过反射
+					Field field = clazz.getDeclaredField(columnLabel);
+					field.setAccessible(true);
+					field.set(t, columValue);
+				}
+				return t;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.closeResource(conn, ps, rs);
+
+		}
+
+		return null;
+	}
+	
+	//问题3：删除指定的学生信息
+	@Test
+	public void testDeleteByExamCard(){
+		System.out.println("请输入学生的考号：");
+		Scanner scanner = new Scanner(System.in);
+		String examCard = scanner.next();
+		//查询指定准考证号的学生
+		String sql = "select FlowID flowID,Type type,IDCard,ExamCard examCard,StudentName name,Location location,Grade grade from examstudent where examCard = ?";
+		Student student = getInstance(Student.class,sql,examCard);
+		if(student == null){
+			System.out.println("查无此人，请重新输入");
+		}else{
+			String sql1 = "delete from examstudent where examCard = ?";
+			int deleteCount = update(sql1, examCard);
+			if(deleteCount > 0){
+				System.out.println("删除成功");
+			}
+		}
+	}
+	//优化以后的操作：
+	@Test
+	public void testDeleteByExamCard1(){
+		System.out.println("请输入学生的考号：");
+		Scanner scanner = new Scanner(System.in);
+		String examCard = scanner.next();
+		String sql = "delete from examstudent where examCard = ?";
+		int deleteCount = update(sql, examCard);
+		if(deleteCount > 0){
+			System.out.println("删除成功");
+		}else{
+			System.out.println("查无此人，请重新输入");
+		}
+		
+	}
+}
+~~~
+
+~~~java
+public class Student {
+	private int flowID;//流水号
+	private int type;//考试类型
+	private String IDCard;//身份证号
+	private String examCard;//准考证号
+	private String name;//学生姓名
+	private String location;//所在城市
+	private int grade;//成绩
+	public Student() {
+		super();
+	}
+	public Student(int flowID, int type, String iDCard, String examCard, String name, String location, int grade) {
+		super();
+		this.flowID = flowID;
+		this.type = type;
+		IDCard = iDCard;
+		this.examCard = examCard;
+		this.name = name;
+		this.location = location;
+		this.grade = grade;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public String getIDCard() {
+		return IDCard;
+	}
+	public void setIDCard(String iDCard) {
+		IDCard = iDCard;
+	}
+	public String getExamCard() {
+		return examCard;
+	}
+	public void setExamCard(String examCard) {
+		this.examCard = examCard;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	public int getFlowID() {
+		return flowID;
+	}
+	@Override
+	public String toString() {
+		System.out.println("=========查询结果===========");
+		return info();
+	}
+	private String info() {
+		return "流水号：" + flowID + "\n四级/六级：" + type + "\n身份证号：" + IDCard + "\n准考证号：" + examCard + 
+				"\n学生姓名：" + name + "\n区域：" + location + "\n成绩：" + grade;
+	}	
+}
+~~~
 
 ## 第4章 操作BLOB类型字段
 
@@ -750,7 +1068,7 @@ Grade:
 
 - MySQL的四种BLOB类型(除了在存储的最大信息量上不同外，他们是等同的)
 
-![1555581069798](尚硅谷_宋红康_JDBC.assets/1555581069798.png)
+![](尚硅谷_宋红康_JDBC/21.png)
 
 - 实际使用中根据需要存入的数据大小定义不同的BLOB类型。
 - 需要注意的是：如果存储的文件过大，数据库的性能会下降。
@@ -780,8 +1098,6 @@ JDBCUtils.closeResource(conn, ps);
 
 ```
 
-
-
 ### 4.3 修改数据表中的Blob类型字段
 
 ```java
@@ -800,8 +1116,6 @@ ps.execute();
 fis.close();
 JDBCUtils.closeResource(conn, ps);
 ```
-
-
 
 ### 4.4 从数据表中读取大数据类型
 
@@ -841,8 +1155,6 @@ if(rs.next()){
 
 ```
 
-
-
 ## 第5章 批量插入
 
 ### 5.1 批量执行SQL语句
@@ -858,8 +1170,6 @@ JDBC的批量处理语句包括下面三个方法：
 - 多条SQL语句的批量处理；
 - 一个SQL语句的批量传参；
 
-
-
 ### 5.2 高效的批量插入
 
 举例：向数据表中插入20000条数据
@@ -873,8 +1183,6 @@ NAME VARCHAR(20)
 );
 ```
 
-
-
 #### 5.2.1 实现层次一：使用Statement
 
 ```java
@@ -885,8 +1193,6 @@ for(int i = 1;i <= 20000;i++){
 	st.executeUpdate(sql);
 }
 ```
-
-
 
 #### 5.2.2 实现层次二：使用PreparedStatement
 
@@ -904,8 +1210,6 @@ for(int i = 1;i <= 20000;i++){
 		
 long end = System.currentTimeMillis();
 System.out.println("花费的时间为：" + (end - start));//82340
-		
-		
 JDBCUtils.closeResource(conn, ps);
 ```
 
@@ -990,8 +1294,6 @@ public void testInsert2() throws Exception{
 	JDBCUtils.closeResource(conn, ps);
 }
 ```
-
-
 
 ## 第6章： 数据库事务
 
@@ -1085,8 +1387,6 @@ public void update(Connection conn ,String sql, Object... args) {
 }
 ```
 
-
-
 ### 6.3 事务的ACID属性    
 
 1. **原子性（Atomicity）**
@@ -1116,7 +1416,7 @@ public void update(Connection conn ,String sql, Object... args) {
 
 - 数据库提供的4种事务隔离级别：
 
-  ![1555586275271](尚硅谷_宋红康_JDBC.assets/1555586275271.png)
+  ![](尚硅谷_宋红康_JDBC/22.png)
 
 - Oracle 支持的 2 种事务隔离级别：**READ COMMITED**, SERIALIZABLE。 Oracle 默认的事务隔离级别为: **READ COMMITED** 。
 
@@ -1172,11 +1472,11 @@ public void update(Connection conn ,String sql, Object... args) {
 - 作用：为了实现功能的模块化，更有利于代码的维护和升级。
 - 下面是尚硅谷JavaWeb阶段书城项目中DAO使用的体现：
 
-![1566726681515](尚硅谷_宋红康_JDBC.assets/1566726681515.png)
+![](尚硅谷_宋红康_JDBC/23.png)
 
 - 层次结构：
 
-![1566745811244](尚硅谷_宋红康_JDBC.assets/1566745811244.png)
+![](尚硅谷_宋红康_JDBC/24.png)
 
 ### 【BaseDAO.java】
 
@@ -1602,8 +1902,6 @@ public class User {
 
 ```
 
-
-
 ## 第8章：数据库连接池
 
 ### 8.1 JDBC数据库连接池的必要性
@@ -1626,11 +1924,11 @@ public class User {
 - **数据库连接池**负责分配、管理和释放数据库连接，它**允许应用程序重复使用一个现有的数据库连接，而不是重新建立一个**。
 - 数据库连接池在初始化时将创建一定数量的数据库连接放到连接池中，这些数据库连接的数量是由**最小数据库连接数来设定**的。无论这些数据库连接是否被使用，连接池都将一直保证至少拥有这么多的连接数量。连接池的**最大数据库连接数量**限定了这个连接池能占有的最大连接数，当应用程序向连接池请求的连接数超过最大连接数量时，这些请求将被加入到等待队列中。
 
-![1555593464033](尚硅谷_宋红康_JDBC.assets/1555593464033.png)
+![](尚硅谷_宋红康_JDBC/25.png)
 
 - **工作原理：**
 
-![1555593598606](尚硅谷_宋红康_JDBC.assets/1555593598606.png)
+![](尚硅谷_宋红康_JDBC/26.png)
 
 - **数据库连接池技术的优点**
 
@@ -1685,8 +1983,6 @@ public static Connection getConnection1() throws Exception{
 }
 ```
 
-
-
 - 获取连接方式二
 
 ```java
@@ -1728,8 +2024,6 @@ public static Connection getConnection2() throws SQLException{
 </c3p0-config>
 ```
 
-
-
 #### 8.3.2 DBCP数据库连接池
 
 - DBCP 是 Apache 软件基金组织下的开源连接池实现，该连接池依赖该组织下的另一个开源系统：Common-pool。如需使用该连接池实现，应在系统中增加如下两个 jar 文件：
@@ -1752,8 +2046,6 @@ public static Connection getConnection2() throws SQLException{
 | minEvictableIdleTimeMillis |        | 连接池中连接，在时间段内一直空闲， 被逐出连接池的时间        |
 | removeAbandonedTimeout     | 300    | 超过时间限制，回收没有用(废弃)的连接                         |
 | removeAbandoned            | false  | 超过removeAbandonedTimeout时间后，是否进 行没用连接（废弃）的回收 |
-
-
 
 - 获取连接方式一：
 
@@ -1812,8 +2104,6 @@ password=abc123
 initialSize=10
 #...
 ```
-
-
 
 #### 8.3.3 Druid（德鲁伊）数据库连接池
 
@@ -1882,8 +2172,6 @@ filters=wall
 | filters                       |          | 属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：   监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall |
 | proxyFilters                  |          | 类型是List，如果同时配置了filters和proxyFilters，是组合关系，并非替换关系 |
 
-
-
 ## 第9章：Apache-DBUtils实现CRUD操作
 
 ### 9.1 Apache-DBUtils简介
@@ -1896,13 +2184,9 @@ filters=wall
   - 工具类：org.apache.commons.dbutils.DbUtils   
 - API包说明：
 
-![1555595163263](尚硅谷_宋红康_JDBC.assets/1555595163263.png)
+![](尚硅谷_宋红康_JDBC/27.png)
 
-![1555595198644](尚硅谷_宋红康_JDBC.assets/1555595198644.png)
-
-
-
-
+![](尚硅谷_宋红康_JDBC/28.png)
 
 ### 9.2 主要API的使用
 
@@ -1974,8 +2258,6 @@ public void testDelete() throws Exception {
 
 }
 ```
-
-
 
 #### 9.2.3 ResultSetHandler接口及实现类
 
@@ -2152,4 +2434,3 @@ public void testUpdateWithTx() {
 }
 ```
 
- c
