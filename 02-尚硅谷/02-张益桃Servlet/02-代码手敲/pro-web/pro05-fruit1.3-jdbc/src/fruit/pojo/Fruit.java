@@ -1,8 +1,8 @@
-package jdbc;
+package fruit.pojo;
 
 /**
  * @Author liming
- * @Date 2022/5/16 8:12
+ * @Date 2022/5/21 12:33
  **/
 public class Fruit {
     private Integer fid;
@@ -71,12 +71,7 @@ public class Fruit {
 
     @Override
     public String toString() {
-        return "Fruit{" +
-                "fid=" + fid +
-                ", fname='" + fname + '\'' +
-                ", price=" + price +
-                ", fcount=" + fcount +
-                ", remark='" + remark + '\'' +
-                '}';
+        return fid + "\t\t" + fname + "\t\t\t" + price +"\t\t" + fcount +"\t\t" + remark ;
     }
 }
+
