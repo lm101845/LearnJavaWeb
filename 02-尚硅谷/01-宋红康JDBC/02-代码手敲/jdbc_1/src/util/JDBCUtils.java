@@ -27,6 +27,7 @@ public class JDBCUtils {
         //这种方式也可以获得一个系统类加载器
 
         Properties props = new Properties();
+        System.out.println(props);
         props.load(is);
 
         String user = props.getProperty("user");

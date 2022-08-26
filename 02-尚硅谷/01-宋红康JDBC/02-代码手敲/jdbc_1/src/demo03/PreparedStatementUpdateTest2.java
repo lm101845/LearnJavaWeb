@@ -33,8 +33,8 @@ public class PreparedStatementUpdateTest2 {
             String sql = "update customers set name = ? where id = ?";
             ps = conn.prepareStatement(sql);
             //3.Ìî³äÕ¼Î»·û
-            ps.setObject(1, "mozhate");
-            ps.setObject(2, 18);
+            ps.setObject(1, "nezha444");
+            ps.setObject(2, 22);
             //4.Ö´ÐÐ
             ps.execute();
         } catch (Exception e) {
