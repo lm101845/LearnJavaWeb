@@ -18,7 +18,9 @@ public class ConnectionTest {
         //Driver driver = new com.mysql.jdbc.Driver();
         //这个在MySQL8里面被废弃了
         //一个坑的地方，因为我装的MySQL是8.0的，老师给的jar包是5.x的，不匹配，所以连接不上，换个高版本jar包就好了
+//        我现在MySQL5.0和8.0的同时装了，试了一下，我想用哪个就用哪个了
         Driver driver = new com.mysql.cj.jdbc.Driver();
+//        Driver driver = new com.mysql.jdbc.Driver();
         //com.mysql.jdbc.Driver这个是写死的
         //driver是驱动的意思
         //url:http://localhost:8080/gmall/keyboard.jpg

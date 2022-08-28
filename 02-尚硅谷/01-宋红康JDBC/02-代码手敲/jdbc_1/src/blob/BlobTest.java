@@ -18,10 +18,10 @@ public class BlobTest {
         Connection conn = JDBCUtils.getConnection();
         String sql = "insert into customers(name,email,birth,photo)values(?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setObject(1,"张宇豪");
+        ps.setObject(1,"袁绍333");
         ps.setObject(2,"1254@gmail.com");
         ps.setObject(3,"1992-08-26");
-        FileInputStream is = new FileInputStream(new File("playgirl.jpg"));
+        FileInputStream is = new FileInputStream(new File("girl.jpg"));
         ps.setBlob(4,is);
 
         ps.execute();
