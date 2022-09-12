@@ -17,14 +17,17 @@
         <th class="w20">单价</th>
         <th class="w20">库存</th>
         <th>操作</th>
+      </tr>
       <tr th:if="${#lists.isEmpty(session.fruitList)}">
         <td colspan="4">对不起，库存为空！</td>
       </tr>
       <tr th:unless="${#lists.isEmpty(session.fruitList)}" th:each="fruit : ${session.fruitList}">
-        <td th:text="${fruit.fname}">苹果</td>
+        <!-- <td><a th:text="${fruit.fname}" th:href="@{'/edit.do?fid='+${fruit.fid}}">苹果</a></td> -->
+        <td><a th:text="${fruit.fname}" th:href="@{/edit.do(fid=${fruit.fid})}">苹果</a></td>
         <td th:text="${fruit.price}">5</td>
         <td th:text="${fruit.fcount}">20</td>
-        <td><img src="imgs/del.jpg" class="delImg"/></td>
+        <!-- <td><img src="imgs/del.jpg" class="delImg" th:onclick="'delFruit('+${fruit.fid}+')'"/></td> -->
+        <td><img src="imgs/del.jpg" class="delImg" th:onclick="|delFruit(${fruit.fid})|"/></td>
       </tr>
     </table>
   </div>
