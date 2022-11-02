@@ -1,4 +1,4 @@
-package com.atguigu.util;
+package com.atguigu1.util;
 
 /**
  * @Author liming

@@ -1,6 +1,6 @@
-package com.atguigu.transaction;
+package com.atguigu1.transaction;
 
-import com.atguigu.util.JDBCUtils;
+import com.atguigu1.util.JDBCUtils;
 import org.junit.Test;
 
 import java.sql.Connection;
