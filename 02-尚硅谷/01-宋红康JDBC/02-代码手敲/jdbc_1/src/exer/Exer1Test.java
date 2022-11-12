@@ -23,13 +23,10 @@ public class Exer1Test {
         int insertCount = update(sql,name,email,birthday);
         if(insertCount > 0){
             System.out.println("添加成功");
-
         }else{
             System.out.println("添加失败");
         }
-
     }
-
 
     // 通用的增删改操作
     public int update(String sql, Object... args) {// sql中占位符的个数与可变形参的长度相同！
@@ -59,7 +56,6 @@ public class Exer1Test {
         } finally {
             // 5.资源的关闭
             JDBCUtils.closeResource(conn, ps);
-
         }
         return 0;
     }

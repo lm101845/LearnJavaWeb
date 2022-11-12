@@ -1,4 +1,4 @@
-package com.auguigu3.dao;
+package com.atguigu3.dao;
 
 /**
  * @Author liming
@@ -7,7 +7,7 @@ package com.auguigu3.dao;
 
 
 
-import com.auguigu3.bean.Customer;
+import com.atguigu3.bean.Customer;
 
 import java.sql.Connection;
 import java.sql.Date;

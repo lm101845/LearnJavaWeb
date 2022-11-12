@@ -1,10 +1,10 @@
-package com.auguigu3.dao.junit;
+package com.atguigu3.dao.junit;
 
 //import com.atguigu1.util.JDBCUtils; //使用普通数据库连接
 import com.atguigu4.util.JDBCUtils;   //使用C3P0数据库连接池技术
 
-import com.auguigu3.bean.Customer;
-import com.auguigu3.dao.CustomerDAOImpl;
+import com.atguigu3.bean.Customer;
+import com.atguigu3.dao.CustomerDAOImpl;
 import org.junit.Test;
 
 import java.sql.Connection;

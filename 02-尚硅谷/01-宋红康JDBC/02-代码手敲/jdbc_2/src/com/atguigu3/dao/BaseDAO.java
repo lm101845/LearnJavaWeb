@@ -1,4 +1,4 @@
-package com.auguigu3.dao;
+package com.atguigu3.dao;
 
 /**
  * @Author liming

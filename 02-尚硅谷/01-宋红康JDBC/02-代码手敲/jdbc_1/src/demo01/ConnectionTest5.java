@@ -26,9 +26,12 @@ public class ConnectionTest5 {
         //通过类的加载器来加载
 //        InputStream is = ConnectionTest5.class.getClassLoader().getResourceAsStream("jdbc.properties");
         InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("jdbc.properties");
+        //ClassLoader负责在运行时将Java类动态加载到JVM中，而且ClassLoader是JRE的一部分。
+        // 因此，由于ClassLoader的存在，JVM无需了解底层文件和文件系统即可运行Java程序。
         //这种方式也可以获得一个系统类加载器
 
         Properties props = new Properties();
+        //Properties（Java.util.Properties）是Java中一个比较重要的类，主要用于读取Java的配置文件
         props.load(is);
 
         String user = props.getProperty("user");

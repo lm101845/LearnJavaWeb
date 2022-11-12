@@ -56,7 +56,7 @@ public class PreparedStatementUpdateTest {
             ps = conn.prepareStatement(sql);
 
             //5.填充占位符(java和数据库交互，索引从1开始)
-            ps.setString(1, "nezha111");
+            ps.setString(1, "nezha222");
             ps.setString(2, "nezha111@gmail.com");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = sdf.parse("1000-01-01");
